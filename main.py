@@ -4,16 +4,17 @@ from PyQt5.QtGui import QPixmap,QColor
 import sys
 import handler
 from design import Ui_Form
-import file_manager
-
+from PIL import Image,ImageGrab
+import os
 
 
 class MyWindow(QtWidgets.QMainWindow):
 
     def __init__(self):
+        self.path_to_image = 'temp.png'
+        self.result_text_path = 'result.txt'
         super(MyWindow, self).__init__()
         self.ui = Ui_Form()
-        self.f = file_manager.File()
         self.h = handler.ImgHandler()
         self.clipboard = QtWidgets.QApplication.clipboard()
         
@@ -27,7 +28,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setWindowTitle('Vce to text')
 
-        self.ui.loadButton.clicked.connect(lambda: self.start(readFrom ='file'))
+        self.ui.loadButton.clicked.connect(lambda: self.save_and_start_recognition(readFrom ='file'))
         self.ui.exitButton.clicked.connect(lambda: exit(0))
         self.ui.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.ui.copyButton.clicked.connect(lambda: self.copy_text())
@@ -65,6 +66,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.ui.plainTextEdit.appendPlainText(text)
         pixmap = QPixmap('temp.png')
         self.ui.imageWidget.setPixmap(pixmap)
+        os.remove(self.path_to_image)
     
     def copy_text(self):
         self.clipboard.setText(self.ui.plainTextEdit.toPlainText())
@@ -72,33 +74,41 @@ class MyWindow(QtWidgets.QMainWindow):
 
     def save_text(self):
         path=self.get_path_to_save()
-        self.f.save_text(path,self.ui.plainTextEdit.toPlainText())
+        if path:
+            with open(path, "w", encoding = 'UTF-8') as file:
+                file.write(self.ui.plainTextEdit.toPlainText())
+            return self.result_text_path
         self.show_message(self.ui.saveMessage)
 
-
+    
     
     def save_and_start_recognition(self,readFrom):
-        #TODO
 
         if readFrom =='clipboard':
-            if not self.f.grab_from_clipboard():
+            image = ImageGrab.grabclipboard()
+            if  image == None:
                 self.show_message(self.ui.errorMessage)
                 return 'Wrong date'
 
         elif readFrom =='file':
             if path:=self.get_path_to_file():
-                self.f.grab_from_file(path)
+                if os.path.isfile(path):
+                    image = Image.open(path)
             else:
                 return 'Error'
+        image.save(self.path_to_image)
+        #TODO
 
         #self.ui.loadgif.setEnabled(True)
         self.gif.start()
+
         text = self.h.text_recognition()
-        
         self.set_plain_text(text)
+
         self.gif.stop()
         self.ui.loadgif.setEnabled(False)
-        self.f.delete_temp_image()
+
+        
 
 
 app = QtWidgets.QApplication([])

@@ -18,7 +18,7 @@ class File():
             image.save(self.path_to_image)
             return self.path_to_image
 
-    def save_text(self,_path,_text):
+    def save_text_to_txt(self,_path,_text):
         if _path:
             with open(_path, "w", encoding = 'UTF-8') as file:
                 file.write(_text)

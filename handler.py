@@ -18,16 +18,16 @@ class ImgHandler():
         new_image = img.resize((int(img.width*scale), int(img.height*scale)))
         return new_image
 
-    def save_image(self):
-        image = Image.open(self.path)
-        image.save('temp.png')
+    # def save_image(self):
+    #     image = Image.open(self.path)
+    #     image.save('temp.png')
 
-    def grab_from_clipboard(self):
+    # def grab_from_clipboard(self):
 
-        image = ImageGrab.grabclipboard()
-        if image != None:
-            image.save(self.path)
-            return True
+    #     image = ImageGrab.grabclipboard()
+    #     if image != None:
+    #         image.save(self.path)
+    #         return True
 
 
     def text_recognition(self):
@@ -43,15 +43,15 @@ class ImgHandler():
         res_img.save('temp.png')
         return text
 
-    def draw_polygon(self, draw, cord):
-        xy = [tuple(i) for i in cord]
-        draw.polygon(xy, outline='green', width=2)
-        return draw
+    # def draw_polygon(self, draw, cord):
+    #     xy = [tuple(i) for i in cord]
+    #     draw.polygon(xy, outline='green', width=2)
+    #     return draw
 
-    def create_image(self):
-        image = Image.open(self.result_draw_path)
-        draw = ImageDraw.Draw(image)
-        return image, draw
+    # def create_image(self):
+    #     image = Image.open(self.result_draw_path)
+    #     draw = ImageDraw.Draw(image)
+    #     return image, draw
 
 
 if __name__ == '__main__':
