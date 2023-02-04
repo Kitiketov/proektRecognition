@@ -1,17 +1,19 @@
 # pip install easyocr or pip install -r requirements.txt
 import easyocr
-from PIL import Image, ImageDraw, ImageGrab
+from PIL import Image,ImageGrab,ImageDraw
+
+
 
 
 class ImgHandler():
-    def __init__(self, path_to_file: str) -> None:
-        self.path = path_to_file
+    def __init__(self) -> None:
+        #self.path = path_to_file
         self.result_text_path = 'result.txt'
         self.result_draw_path = 'draw.png'
 
     def resize_image(self, img):
         w = 371
-        h = 491
+        h = 491 
         scale = min(w/img.width, h/img.height)
         new_image = img.resize((int(img.width*scale), int(img.height*scale)))
         return new_image

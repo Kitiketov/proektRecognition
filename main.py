@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPixmap,QColor
 import sys
 import handler
 from design import Ui_Form
+import file_manager
 
 
 
@@ -12,6 +13,8 @@ class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
         self.ui = Ui_Form()
+        self.f = file_manager.File()
+        self.h = handler.ImgHandler()
         self.clipboard = QtWidgets.QApplication.clipboard()
         
         self.ui.setupUi(self)
@@ -46,7 +49,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.tempcord = QPoint(event.pos())
 
 
-    def show_message(self, widget):
+    def show_message(self, widget): 
         widget.setEnabled(True)
         self.timer.timeout.connect(lambda: widget.setEnabled(False))
         self.timer.start(2000)
@@ -68,29 +71,27 @@ class MyWindow(QtWidgets.QMainWindow):
         self.show_message(self.ui.copyMessage)
 
     def save_text(self):
-        if path:=self.get_path_to_save():
-            with open(path, "w", encoding = 'UTF-8') as file:
-                file.write(self.ui.plainTextEdit.toPlainText())
-            self.show_message(self.ui.saveMessage)
+        path=self.get_path_to_save()
+        self.f.save_text(path,self.ui.plainTextEdit.toPlainText())
+        self.show_message(self.ui.saveMessage)
 
     def recognition_from_file(self):
-        if path:=self.get_path_to_file():
-            h = handler.ImgHandler(path)
-            h.save_image()
-            self.start(h)
+        path = self.get_path_to_file()
+        self.f.save_image(path)
+        self.start()
+
 
     def recognition_from_clipboard(self):
-        h = handler.ImgHandler('temp.png')
-        if h.grab_from_clipboard():
-            self.start(h)
+        if self.f.grab_from_clipboard():
+            self.start()
         else:
             self.show_message(self.ui.errorMessage)
     
-    def start(self,h):
+    def start(self):
         #TODO
         #self.ui.loadgif.setEnabled(True)
         self.gif.start()
-        text = h.text_recognition()
+        text = self.h.text_recognition()
         self.set_plain_text(text)
         self.gif.stop()
         self.ui.loadgif.setEnabled(False)
