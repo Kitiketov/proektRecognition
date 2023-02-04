@@ -27,11 +27,11 @@ class MyWindow(QtWidgets.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.setWindowTitle('Vce to text')
 
-        self.ui.loadButton.clicked.connect(lambda: self.recognition_from_file())
+        self.ui.loadButton.clicked.connect(lambda: self.start(readFrom ='file'))
         self.ui.exitButton.clicked.connect(lambda: exit(0))
         self.ui.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.ui.copyButton.clicked.connect(lambda: self.copy_text())
-        self.ui.pasteButton.clicked.connect(lambda: self.recognition_from_clipboard())
+        self.ui.pasteButton.clicked.connect(lambda: self.start(readFrom ='clipboard'))
         self.ui.saveButton.clicked.connect(lambda: self.save_text())
 
         self.timer = QtCore.QTimer()
@@ -75,23 +75,27 @@ class MyWindow(QtWidgets.QMainWindow):
         self.f.save_text(path,self.ui.plainTextEdit.toPlainText())
         self.show_message(self.ui.saveMessage)
 
-    def recognition_from_file(self):
-        path = self.get_path_to_file()
-        self.f.save_image(path)
-        self.start()
 
-
-    def recognition_from_clipboard(self):
-        if self.f.grab_from_clipboard():
-            self.start()
-        else:
-            self.show_message(self.ui.errorMessage)
     
-    def start(self):
+    def start(self,readFrom):
         #TODO
+
+        if readFrom =='clipboard':
+            if not self.f.grab_from_clipboard():
+                self.show_message(self.ui.errorMessage)
+                return 'Wrong date'
+
+        elif readFrom =='file':
+            if path:=self.get_path_to_file():
+                self.f.grab_from_file(path)
+            else:
+                return 'Error'
+
         #self.ui.loadgif.setEnabled(True)
         self.gif.start()
         text = self.h.text_recognition()
+        self.f.delete_temp_image()
+
         self.set_plain_text(text)
         self.gif.stop()
         self.ui.loadgif.setEnabled(False)
