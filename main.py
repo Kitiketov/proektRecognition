@@ -87,12 +87,13 @@ class MyWindow(QtWidgets.QMainWindow):
 
         if readFrom =='clipboard':
             image = ImageGrab.grabclipboard()
-            if  image == None:
+            if  image is None:
                 self.show_message(self.ui.errorMessage)
                 return 'Wrong date'
 
         elif readFrom =='file':
-            if path:=self.get_path_to_file():
+            path = self.get_path_to_file()
+            if path:
                 if os.path.isfile(path):
                     image = Image.open(path)
             else:
