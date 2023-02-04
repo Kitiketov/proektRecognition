@@ -77,8 +77,9 @@ class MyWindow(QtWidgets.QMainWindow):
         if path:
             with open(path, "w", encoding = 'UTF-8') as file:
                 file.write(self.ui.plainTextEdit.toPlainText())
+            self.show_message(self.ui.saveMessage)
             return self.result_text_path
-        self.show_message(self.ui.saveMessage)
+            
 
     
     
