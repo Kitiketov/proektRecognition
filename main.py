@@ -31,7 +31,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.ui.exitButton.clicked.connect(lambda: exit(0))
         self.ui.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.ui.copyButton.clicked.connect(lambda: self.copy_text())
-        self.ui.pasteButton.clicked.connect(lambda: self.start(readFrom ='clipboard'))
+        self.ui.pasteButton.clicked.connect(lambda: self.save_and_start_recognition(readFrom ='clipboard'))
         self.ui.saveButton.clicked.connect(lambda: self.save_text())
 
         self.timer = QtCore.QTimer()
@@ -77,7 +77,7 @@ class MyWindow(QtWidgets.QMainWindow):
 
 
     
-    def start(self,readFrom):
+    def save_and_start_recognition(self,readFrom):
         #TODO
 
         if readFrom =='clipboard':
@@ -94,11 +94,11 @@ class MyWindow(QtWidgets.QMainWindow):
         #self.ui.loadgif.setEnabled(True)
         self.gif.start()
         text = self.h.text_recognition()
-        self.f.delete_temp_image()
-
+        
         self.set_plain_text(text)
         self.gif.stop()
         self.ui.loadgif.setEnabled(False)
+        self.f.delete_temp_image()
 
 
 app = QtWidgets.QApplication([])
