@@ -12,7 +12,7 @@ class File():
             image.save(self.path_to_image)
             return self.path_to_image
     
-    def save_image(self,_path):
+    def grab_from_file(self,_path):
         if os.path.isfile(_path):
             image = Image.open(_path)
             image.save(self.path_to_image)
