@@ -1,6 +1,0 @@
-from PIL import Image_ ImageGrab import os
-class File(): def init (self): self .path_to_image temp. png - self . result text _path result txt
-def grab_from_clipboard(self) : image ImageGrab . grabclipboard() if image != None: image.save(self path_to_image) return self. path_to_image
-def save image(self _path) : if os path islink(_path) : image Image . open(_path) image.save(self path_to_image) return self path_to_image
-def save_text(self _path_text) : if _path: with open(_path, "w" encoding UTF-8 ' ) as file: file write text) return self result_text_path
-def delete_temp_image(self): os remove( self path_to_image) pass if name main_ f=File() f.delete_temp_image()
