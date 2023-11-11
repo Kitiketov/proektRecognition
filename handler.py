@@ -1,15 +1,27 @@
 # pip install easyocr or pip install -r requirements.txt
 import easyocr
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtGui import QPixmap
 from PIL import Image,ImageGrab,ImageDraw
 
+from recognition import text_recognition
+import tab_detection
 
-
+import os
 
 class ImgHandler():
-    def __init__(self) -> None:
+    def __init__(self,ui,MyWindow) -> None:
         #self.path = path_to_file
+        self.ui = ui
+        self.path_to_image = 'temp.png'
+        self.result_text_path = 'result.txt'
+        self.MyWindow = MyWindow
         self.result_text_path = 'result.txt'
         self.result_draw_path = 'draw.png'
+        self.recog = text_recognition.Recognition(image_name =  self.path_to_image)
+        self.tab = tab_detection.TabDetector()
+        self.clipboard = QtWidgets.QApplication.clipboard()
+        self.timer = QtCore.QTimer()
 
     def resize_image(self, img):
         w = 371
@@ -18,40 +30,76 @@ class ImgHandler():
         new_image = img.resize((int(img.width*scale), int(img.height*scale)))
         return new_image
 
-    # def save_image(self):
-    #     image = Image.open(self.path)
-    #     image.save('temp.png')
 
-    # def grab_from_clipboard(self):
+    def set_plain_text(self,text):
+        self.ui.plainTextEdit.clear()
+        self.ui.plainTextEdit.appendPlainText(text)
+        pixmap = QPixmap( self.path_to_image)
+        self.ui.imageWidget.setPixmap(pixmap)
+        os.remove(self.path_to_image)
+    
 
-    #     image = ImageGrab.grabclipboard()
-    #     if image != None:
-    #         image.save(self.path)
-    #         return True
+    def show_message(self, widget): 
+        widget.setEnabled(True)
+        self.timer.timeout.connect(lambda: widget.setEnabled(False))
+        self.timer.start(2000)
 
+    def get_path_to_file(self):
+        return QtWidgets.QFileDialog.getOpenFileName(self.MyWindow, 'выбрать путь к файлу', '', 'Изображение (*.png *.jpg)')[0]
+    
+    def get_path_to_save(self):
+        return QtWidgets.QFileDialog.getSaveFileName(self.MyWindow, 'выбрать папку для сохранения', 'результат.txt', 'Текстовый документ (*.txt)')[0]
+    
+    def copy_text(self):
+        self.clipboard.setText(self.ui.plainTextEdit.toPlainText())
+        self.show_message(self.ui.copyMessage)
+    
+    def save_text(self):
+        path=self.get_path_to_save()
+        if path:
+            with open(path, "w", encoding = 'UTF-8') as file:
+                file.write(self.ui.plainTextEdit.toPlainText())
+            self.show_message(self.ui.saveMessage)
+            return self.result_text_path
 
-    def text_recognition(self):
-        reader = easyocr.Reader(['ru', 'en'])
-        text=''
-        result = reader.readtext('temp.png', detail=1, paragraph=True)
+    def text_recognition(self,readFrom ='file'):
 
-        
-        for line in result:
+        if readFrom =='clipboard':
+            image = ImageGrab.grabclipboard()
+            if  image is None:
+                self.show_message(self.ui.errorMessage)
+                return 'Wrong date'
+        elif readFrom =='file':
+            _path = self.get_path_to_file()
+            if os.path.isfile(_path):
+                image = Image.open(_path)
+            else:
+                return 'Error'
+        image.save(self.path_to_image)
+         
+        text,cords = self.recog.start()
+        res_img = self.resize_image(Image.open( self.path_to_image))
+        res_img.save( self.path_to_image)
+        if self.tab.mode:
+            tab_count = self.tab.tab_definition(cords)
+            tab_text = self.tab.add_tab(text, tab_count)
+            self.set_plain_text(tab_text)
+        else:
+            self.set_plain_text(text)
 
-            text+=f"{line[1]}\n"
-        res_img = self.resize_image(Image.open('temp.png'))
-        res_img.save('temp.png')
-        return text
-
-    # def draw_polygon(self, draw, cord):
-    #     xy = [tuple(i) for i in cord]
-    #     draw.polygon(xy, outline='green', width=2)
-    #     return draw
-
-    # def create_image(self):
-    #     image = Image.open(self.result_draw_path)
-    #     draw = ImageDraw.Draw(image)
-    #     return image, draw
+    def switch_code_mode(self):
+        mode = self.recog.switch_mode()
+        if mode == 'text':
+            self.show_message(self.ui.textModeMessage)
+        elif mode == 'code':
+            self.show_message(self.ui.codeModeMessage)
+    
+    def switch_tab_mode(self):
+        mode = self.tab.switch_mode()
+        # if mode == 'text':
+        #     self.show_message(self.ui.textModeMessage)
+        # elif mode == 'code':
+        #     self.show_message(self.ui.codeModeMessage)
 
 
 if __name__ == '__main__':

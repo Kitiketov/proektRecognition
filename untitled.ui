@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>822</width>
+    <width>823</width>
     <height>615</height>
    </rect>
   </property>
@@ -459,6 +459,158 @@ QLabel:disabled{
      <string>Copied</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="codeMode">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>530</y>
+      <width>60</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	border-radius: 10px;
+	background-color: rgb(35, 39, 42);
+	color: rgb(185, 187, 190);
+	font: 10pt &quot;Terminal&quot;;
+}
+QPushButton:hover{
+	border-radius: 10px;
+	background-color: rgb(60, 64, 71);
+	color: rgb(216, 217, 218);
+	font: 10pt &quot;Terminal&quot;;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>C:/Users/roske/Pictures/code.png</normaloff>C:/Users/roske/Pictures/code.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="tabMode">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>680</x>
+      <y>530</y>
+      <width>60</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	border-radius: 10px;
+	background-color: rgb(35, 39, 42);
+	color: rgb(185, 187, 190);
+	font: 10pt &quot;Terminal&quot;;
+}
+QPushButton:hover{
+	border-radius: 10px;
+	background-color: rgb(60, 64, 71);
+	color: rgb(216, 217, 218);
+	font: 10pt &quot;Terminal&quot;;
+}</string>
+    </property>
+    <property name="text">
+     <string>TAB</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>70</width>
+      <height>70</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="codeModeMessage">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>510</y>
+      <width>141</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+	
+	border-radius: 10px;
+	background-color: rgb(35, 39, 42);
+	color: rgb(216, 217, 218);
+	padding-left: auto;
+    padding-right: auto;
+	font: 8pt &quot;Terminal&quot;;
+	
+}
+QLabel:disabled{
+ 	background-color:rgba(0, 0, 0, 0);
+	color: rgba(216, 217, 218,0);
+}</string>
+    </property>
+    <property name="text">
+     <string>Code</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="textModeMessage">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>510</y>
+      <width>121</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+	
+	border-radius: 10px;
+	background-color: rgb(35, 39, 42);
+	color: rgb(216, 217, 218);
+	padding-left: auto;
+    padding-right: auto;
+	font: 8pt &quot;Terminal&quot;;
+	
+}
+QLabel:disabled{
+ 	background-color:rgba(0, 0, 0, 0);
+	color: rgba(216, 217, 218,0);
+}</string>
+    </property>
+    <property name="text">
+     <string>Text</string>
+    </property>
+   </widget>
    <zorder>plainTextEdit</zorder>
    <zorder>exitButton</zorder>
    <zorder>minimizeButton</zorder>
@@ -471,6 +623,10 @@ QLabel:disabled{
    <zorder>saveMessage</zorder>
    <zorder>loadgif</zorder>
    <zorder>copyMessage</zorder>
+   <zorder>codeMode</zorder>
+   <zorder>tabMode</zorder>
+   <zorder>codeModeMessage</zorder>
+   <zorder>textModeMessage</zorder>
   </widget>
  </widget>
  <resources/>
