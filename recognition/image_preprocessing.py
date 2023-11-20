@@ -2,10 +2,10 @@ from PIL import Image, ImageOps
 
 
 class ImagePreprocessor:
-    def __init__(self,image) -> None:
+    def __init__(self, image) -> None:
         self.image =  image
     
-    def _find_average_color(self,image):
+    def _find_average_color(self, image):
         color = 0
         pixels = image.load()
         height, width = image.size
@@ -17,16 +17,16 @@ class ImagePreprocessor:
 
         return color
     
-    def _image_binarization(self,image):
+    def _image_binarization(self, image):
         height, width = image.size
         pixels = image.load()
 
-        img = Image.new('1',(height, width))
+        img = Image.new('1', (height, width))
         new_pixels = img.load()
 
         for i in range(height):
             for j in range(width):
-                if pixels[i, j] >=200:
+                if pixels[i, j] >= 200:
                     new_pixels[i, j] = 255
                 else:
                    new_pixels[i, j] = 0
