@@ -160,15 +160,56 @@ class Ui_Form(object):
         self.plainTextEdit.setPlainText("")
         self.plainTextEdit.setBackgroundVisible(False)
         self.plainTextEdit.setObjectName("plainTextEdit")
-        self.horizontalFrame = QtWidgets.QFrame(self.frame)
-        self.horizontalFrame.setEnabled(True)
-        self.horizontalFrame.setGeometry(QtCore.QRect(290, 500, 258, 52))
-        self.horizontalFrame.setObjectName("horizontalFrame")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalFrame)
+        self.loadgif = QtWidgets.QLabel(self.frame)
+        self.loadgif.setEnabled(False)
+        self.loadgif.setGeometry(QtCore.QRect(385, 280, 55, 51))
+        self.loadgif.setText("")
+        self.loadgif.setObjectName("loadgif")
+        self.codeMode = QtWidgets.QPushButton(self.frame)
+        self.codeMode.setEnabled(True)
+        self.codeMode.setGeometry(QtCore.QRect(610, 530, 60, 60))
+        self.codeMode.setStyleSheet("QPushButton{\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(35, 39, 42);\n"
+"    color: rgb(185, 187, 190);\n"
+"    font: 10pt \"Terminal\";\n"
+"}\n"
+"QPushButton:hover{\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(60, 64, 71);\n"
+"    color: rgb(216, 217, 218);\n"
+"    font: 10pt \"Terminal\";\n"
+"}")
+        self.codeMode.setIconSize(QtCore.QSize(70, 70))
+        self.codeMode.setObjectName("codeMode")
+        self.tabMode = QtWidgets.QPushButton(self.frame)
+        self.tabMode.setEnabled(True)
+        self.tabMode.setGeometry(QtCore.QRect(680, 530, 60, 60))
+        self.tabMode.setStyleSheet("QPushButton{\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(35, 39, 42);\n"
+"    color: rgb(185, 187, 190);\n"
+"    font: 10pt \"Terminal\";\n"
+"}\n"
+"QPushButton:hover{\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(60, 64, 71);\n"
+"    color: rgb(216, 217, 218);\n"
+"    font: 10pt \"Terminal\";\n"
+"}")
+        self.tabMode.setIconSize(QtCore.QSize(70, 70))
+        self.tabMode.setObjectName("tabMode")
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.frame)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(220, 480, 365, 80))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.errorMessage = QtWidgets.QLabel(self.horizontalFrame)
+        self.errorMessage = QtWidgets.QLabel(self.verticalLayoutWidget)
         self.errorMessage.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -189,19 +230,24 @@ class Ui_Form(object):
 "     background-color:rgba(0, 0, 0, 0);\n"
 "    color: rgba(216, 217, 218,0);\n"
 "}")
+        self.errorMessage.setAlignment(QtCore.Qt.AlignCenter)
         self.errorMessage.setObjectName("errorMessage")
         self.horizontalLayout.addWidget(self.errorMessage)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
-        self.saveMessage = QtWidgets.QLabel(self.frame)
-        self.saveMessage.setEnabled(False)
-        self.saveMessage.setGeometry(QtCore.QRect(350, 511, 131, 30))
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem2)
+        self.messageLabel = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.messageLabel.setEnabled(False)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.saveMessage.sizePolicy().hasHeightForWidth())
-        self.saveMessage.setSizePolicy(sizePolicy)
-        self.saveMessage.setStyleSheet("QLabel{\n"
+        sizePolicy.setHeightForWidth(self.messageLabel.sizePolicy().hasHeightForWidth())
+        self.messageLabel.setSizePolicy(sizePolicy)
+        self.messageLabel.setStyleSheet("QLabel{\n"
 "    \n"
 "    border-radius: 10px;\n"
 "    background-color: rgb(35, 39, 42);\n"
@@ -215,119 +261,12 @@ class Ui_Form(object):
 "     background-color:rgba(0, 0, 0, 0);\n"
 "    color: rgba(216, 217, 218,0);\n"
 "}")
-        self.saveMessage.setObjectName("saveMessage")
-        self.loadgif = QtWidgets.QLabel(self.frame)
-        self.loadgif.setEnabled(False)
-        self.loadgif.setGeometry(QtCore.QRect(385, 280, 55, 51))
-        self.loadgif.setText("")
-        self.loadgif.setObjectName("loadgif")
-        self.copyMessage = QtWidgets.QLabel(self.frame)
-        self.copyMessage.setEnabled(False)
-        self.copyMessage.setGeometry(QtCore.QRect(340, 511, 141, 30))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.copyMessage.sizePolicy().hasHeightForWidth())
-        self.copyMessage.setSizePolicy(sizePolicy)
-        self.copyMessage.setStyleSheet("QLabel{\n"
-"    \n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(35, 39, 42);\n"
-"    color: rgb(216, 217, 218);\n"
-"    padding-left: auto;\n"
-"    padding-right: auto;\n"
-"    font: 8pt \"Terminal\";\n"
-"    \n"
-"}\n"
-"QLabel:disabled{\n"
-"     background-color:rgba(0, 0, 0, 0);\n"
-"    color: rgba(216, 217, 218,0);\n"
-"}")
-        self.copyMessage.setObjectName("copyMessage")
-        self.codeMode = QtWidgets.QPushButton(self.frame)
-        self.codeMode.setEnabled(True)
-        self.codeMode.setGeometry(QtCore.QRect(610, 530, 60, 60))
-        self.codeMode.setStyleSheet("QPushButton{\n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(35, 39, 42);\n"
-"    color: rgb(185, 187, 190);\n"
-"    font: 10pt \"Terminal\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(60, 64, 71);\n"
-"    color: rgb(216, 217, 218);\n"
-"    font: 10pt \"Terminal\";\n"
-"}")
-        self.codeMode.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("C:/Users/roske/Pictures/code.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.codeMode.setIcon(icon)
-        self.codeMode.setIconSize(QtCore.QSize(70, 70))
-        self.codeMode.setObjectName("codeMode")
-        self.tabMode = QtWidgets.QPushButton(self.frame)
-        self.tabMode.setEnabled(True)
-        self.tabMode.setGeometry(QtCore.QRect(680, 530, 60, 60))
-        self.tabMode.setStyleSheet("QPushButton{\n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(35, 39, 42);\n"
-"    color: rgb(185, 187, 190);\n"
-"    font: 10pt \"Terminal\";\n"
-"}\n"
-"QPushButton:hover{\n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(60, 64, 71);\n"
-"    color: rgb(216, 217, 218);\n"
-"    font: 10pt \"Terminal\";\n"
-"}")
-        self.tabMode.setIconSize(QtCore.QSize(70, 70))
-        self.tabMode.setObjectName("tabMode")
-        self.codeModeMessage = QtWidgets.QLabel(self.frame)
-        self.codeModeMessage.setEnabled(False)
-        self.codeModeMessage.setGeometry(QtCore.QRect(340, 510, 141, 30))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.codeModeMessage.sizePolicy().hasHeightForWidth())
-        self.codeModeMessage.setSizePolicy(sizePolicy)
-        self.codeModeMessage.setStyleSheet("QLabel{\n"
-"    \n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(35, 39, 42);\n"
-"    color: rgb(216, 217, 218);\n"
-"    padding-left: auto;\n"
-"    padding-right: auto;\n"
-"    font: 8pt \"Terminal\";\n"
-"    \n"
-"}\n"
-"QLabel:disabled{\n"
-"     background-color:rgba(0, 0, 0, 0);\n"
-"    color: rgba(216, 217, 218,0);\n"
-"}")
-        self.codeModeMessage.setObjectName("codeModeMessage")
-        self.textModeMessage = QtWidgets.QLabel(self.frame)
-        self.textModeMessage.setEnabled(False)
-        self.textModeMessage.setGeometry(QtCore.QRect(350, 510, 121, 30))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textModeMessage.sizePolicy().hasHeightForWidth())
-        self.textModeMessage.setSizePolicy(sizePolicy)
-        self.textModeMessage.setStyleSheet("QLabel{\n"
-"    \n"
-"    border-radius: 10px;\n"
-"    background-color: rgb(35, 39, 42);\n"
-"    color: rgb(216, 217, 218);\n"
-"    padding-left: auto;\n"
-"    padding-right: auto;\n"
-"    font: 8pt \"Terminal\";\n"
-"    \n"
-"}\n"
-"QLabel:disabled{\n"
-"     background-color:rgba(0, 0, 0, 0);\n"
-"    color: rgba(216, 217, 218,0);\n"
-"}")
-        self.textModeMessage.setObjectName("textModeMessage")
+        self.messageLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.messageLabel.setObjectName("messageLabel")
+        self.horizontalLayout_2.addWidget(self.messageLabel)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.plainTextEdit.raise_()
         self.exitButton.raise_()
         self.minimizeButton.raise_()
@@ -336,14 +275,10 @@ class Ui_Form(object):
         self.imageWidget.raise_()
         self.saveButton.raise_()
         self.copyButton.raise_()
-        self.horizontalFrame.raise_()
-        self.saveMessage.raise_()
         self.loadgif.raise_()
-        self.copyMessage.raise_()
         self.codeMode.raise_()
         self.tabMode.raise_()
-        self.codeModeMessage.raise_()
-        self.textModeMessage.raise_()
+        self.verticalLayoutWidget.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -357,9 +292,7 @@ class Ui_Form(object):
         self.pasteButton.setText(_translate("Form", "Paste"))
         self.saveButton.setText(_translate("Form", "Save as"))
         self.copyButton.setText(_translate("Form", "Copy"))
-        self.errorMessage.setText(_translate("Form", "Is not picture"))
-        self.saveMessage.setText(_translate("Form", "Saved"))
-        self.copyMessage.setText(_translate("Form", "Copied"))
+        self.codeMode.setText(_translate("Form", "MODE"))
         self.tabMode.setText(_translate("Form", "TAB"))
-        self.codeModeMessage.setText(_translate("Form", "Code"))
-        self.textModeMessage.setText(_translate("Form", "Text"))
+        self.errorMessage.setText(_translate("Form", "Is not picture"))
+        self.messageLabel.setText(_translate("Form", "Code"))

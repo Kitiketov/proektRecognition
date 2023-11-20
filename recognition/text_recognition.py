@@ -1,23 +1,23 @@
-from . import image_preprocessing
-
-import cv2
+from PIL import Image
 import easyocr
 
+from . import image_preprocessing
+
+
 class Recognition:
-    def __init__(self,image_name = "temp.png") -> None:
+    def __init__(self,image_name) -> None:
         self.mode='text'
         self.image_name = image_name
-        self.image =  cv2.imread(image_name)
-        pass
 
     def start(self):
+        # self.image =  Image.open(self.image_name)
         # im_pre = image_preprocessing.ImagePreprocessor(self.image)
         # bin_image = im_pre.convert_color()
-        # cv2.imwrite(self.image_name,bin_image)
-        #reg_detect = text_regions_detection() 
+        # bin_image.save(self.image_name)
+        
         cords = []
-       
         text=''
+
         if self.mode=='text':
             reader = easyocr.Reader(['ru', 'en'])
             result = reader.readtext(self.image_name, detail=1, paragraph=True)
@@ -39,7 +39,3 @@ class Recognition:
         else:
             self.mode='text'
         return self.mode
-
-if __name__ == "__main__":
-    r = Recognition()
-    print(r.start())

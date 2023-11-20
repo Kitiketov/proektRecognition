@@ -1,43 +1,46 @@
-import cv2
-import numpy as np
+from PIL import Image, ImageOps
+
 
 class ImagePreprocessor:
     def __init__(self,image) -> None:
-        self.image = image
-
-
+        self.image =  image
+    
     def _find_average_color(self,image):
         color = 0
-        height, width = image.shape[:2]
+        pixels = image.load()
+        height, width = image.size
+
         for i in range(height):
             for j in range(width):
-                color += image[i, j]
+                color += pixels[i, j]
         color /= (height * width)
+
         return color
     
     def _image_binarization(self,image):
-        height, width = image.shape[:2]
-        img = np.zeros((height,width,3), np.uint8)
+        height, width = image.size
+        pixels = image.load()
+
+        img = Image.new('1',(height, width))
+        new_pixels = img.load()
+
         for i in range(height):
             for j in range(width):
-                if image[i, j] >=200:
-                    img[i, j] = 255
+                if pixels[i, j] >=200:
+                    new_pixels[i, j] = 255
                 else:
-                    img[i, j] = 0
+                   new_pixels[i, j] = 0
+
         return img
     
     
     def convert_color(self):
-        converted_image = cv2.cvtColor(self.image,  cv2.COLOR_BGR2GRAY)
+        converted_image = self.image.convert('L')
 
         color = self._find_average_color(converted_image)
         if color < 200:
-            converted_image = cv2.bitwise_not(converted_image)
+            converted_image = ImageOps.invert(converted_image)
         
-        bin_image = self. _image_binarization(converted_image)
-        #cv2.imshow("color converted image", converted_image)
-        #k = cv2.waitKey(0)
-        #cv2.imshow("white and black image",  bin_image)
-        #k = cv2.waitKey(0)
-        #return  bin_image
+        bin_image = self._image_binarization(converted_image)
+
         return bin_image

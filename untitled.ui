@@ -288,123 +288,6 @@ QPlainTextEdit QScrollBar::handle:vertical {
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QFrame" name="horizontalFrame">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>500</y>
-      <width>258</width>
-      <height>52</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Maximum</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="errorMessage">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-	
-	border-radius: 10px;
-	background-color:rgb(236, 66, 69);
-	color: rgb(216, 217, 218);
-	padding-left: auto;
-    padding-right: auto;
-	font: 8pt &quot;Terminal&quot;;
-	
-}
-QLabel:disabled{
- 	background-color:rgba(0, 0, 0, 0);
-	color: rgba(216, 217, 218,0);
-}</string>
-       </property>
-       <property name="text">
-        <string>Is not picture</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Maximum</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="saveMessage">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>511</y>
-      <width>131</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel{
-	
-	border-radius: 10px;
-	background-color: rgb(35, 39, 42);
-	color: rgb(216, 217, 218);
-	padding-left: auto;
-    padding-right: auto;
-	font: 8pt &quot;Terminal&quot;;
-	
-}
-QLabel:disabled{
- 	background-color:rgba(0, 0, 0, 0);
-	color: rgba(216, 217, 218,0);
-}</string>
-    </property>
-    <property name="text">
-     <string>Saved</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="loadgif">
     <property name="enabled">
      <bool>false</bool>
@@ -419,44 +302,6 @@ QLabel:disabled{
     </property>
     <property name="text">
      <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="copyMessage">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>511</y>
-      <width>141</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel{
-	
-	border-radius: 10px;
-	background-color: rgb(35, 39, 42);
-	color: rgb(216, 217, 218);
-	padding-left: auto;
-    padding-right: auto;
-	font: 8pt &quot;Terminal&quot;;
-	
-}
-QLabel:disabled{
- 	background-color:rgba(0, 0, 0, 0);
-	color: rgba(216, 217, 218,0);
-}</string>
-    </property>
-    <property name="text">
-     <string>Copied</string>
     </property>
    </widget>
    <widget class="QPushButton" name="codeMode">
@@ -486,11 +331,7 @@ QPushButton:hover{
 }</string>
     </property>
     <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>C:/Users/roske/Pictures/code.png</normaloff>C:/Users/roske/Pictures/code.png</iconset>
+     <string>MODE</string>
     </property>
     <property name="iconSize">
      <size>
@@ -535,26 +376,109 @@ QPushButton:hover{
      </size>
     </property>
    </widget>
-   <widget class="QLabel" name="codeModeMessage">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>510</y>
-      <width>141</width>
-      <height>30</height>
+      <x>220</x>
+      <y>480</y>
+      <width>365</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel{
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="errorMessage">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel{
+	
+	border-radius: 10px;
+	background-color:rgb(236, 66, 69);
+	color: rgb(216, 217, 218);
+	padding-left: auto;
+    padding-right: auto;
+	font: 8pt &quot;Terminal&quot;;
+	
+}
+QLabel:disabled{
+ 	background-color:rgba(0, 0, 0, 0);
+	color: rgba(216, 217, 218,0);
+}</string>
+         </property>
+         <property name="text">
+          <string>Is not picture</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="messageLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel{
 	
 	border-radius: 10px;
 	background-color: rgb(35, 39, 42);
@@ -568,48 +492,31 @@ QLabel:disabled{
  	background-color:rgba(0, 0, 0, 0);
 	color: rgba(216, 217, 218,0);
 }</string>
-    </property>
-    <property name="text">
-     <string>Code</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="textModeMessage">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>510</y>
-      <width>121</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel{
-	
-	border-radius: 10px;
-	background-color: rgb(35, 39, 42);
-	color: rgb(216, 217, 218);
-	padding-left: auto;
-    padding-right: auto;
-	font: 8pt &quot;Terminal&quot;;
-	
-}
-QLabel:disabled{
- 	background-color:rgba(0, 0, 0, 0);
-	color: rgba(216, 217, 218,0);
-}</string>
-    </property>
-    <property name="text">
-     <string>Text</string>
-    </property>
+         </property>
+         <property name="text">
+          <string>Code</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
    <zorder>plainTextEdit</zorder>
    <zorder>exitButton</zorder>
@@ -619,14 +526,10 @@ QLabel:disabled{
    <zorder>imageWidget</zorder>
    <zorder>saveButton</zorder>
    <zorder>copyButton</zorder>
-   <zorder>horizontalFrame</zorder>
-   <zorder>saveMessage</zorder>
    <zorder>loadgif</zorder>
-   <zorder>copyMessage</zorder>
    <zorder>codeMode</zorder>
    <zorder>tabMode</zorder>
-   <zorder>codeModeMessage</zorder>
-   <zorder>textModeMessage</zorder>
+   <zorder>verticalLayoutWidget</zorder>
   </widget>
  </widget>
  <resources/>

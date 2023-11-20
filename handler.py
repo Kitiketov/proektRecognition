@@ -1,108 +1,150 @@
 # pip install easyocr or pip install -r requirements.txt
-import easyocr
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QPixmap
-from PIL import Image,ImageGrab,ImageDraw
+from PyQt5.QtCore import QThread
+from PIL import Image,ImageGrab
 
 from recognition import text_recognition
 import tab_detection
 
 import os
 
+class TextRecognitionWorker(QThread):
+    recognition_done = QtCore.pyqtSignal(str)
+
+    def __init__(self,ui,path_to_image,tab,recog):
+        super().__init__()
+
+        self.ui = ui
+        self.path_to_image = path_to_image
+        self.tab = tab
+        self.recog = recog
+
+    def resize_image(self, img):
+        w = self.ui.imageWidget.width()
+        h = self.ui.imageWidget.height()
+        scale = min(w / img.width, h / img.height)
+        new_image = img.resize((int(img.width * scale), int(img.height * scale)))
+        return new_image
+    
+    def run(self):
+        text, cords = self.recog.start()
+        res_img = self.resize_image(Image.open(self.path_to_image))
+        res_img.save(self.path_to_image)
+        if self.tab.mode:
+            tab_count = self.tab.tab_definition(cords)
+            tab_text = self.tab.add_tab(text, tab_count)
+            result = tab_text
+        else:
+            result = text
+        self.recognition_done.emit(result)
+
+
 class ImgHandler():
     def __init__(self,ui,MyWindow) -> None:
-        #self.path = path_to_file
         self.ui = ui
+        self.MyWindow = MyWindow
+
         self.path_to_image = 'temp.png'
         self.result_text_path = 'result.txt'
-        self.MyWindow = MyWindow
-        self.result_text_path = 'result.txt'
-        self.result_draw_path = 'draw.png'
-        self.recog = text_recognition.Recognition(image_name =  self.path_to_image)
+
+        self.recog = text_recognition.Recognition(self.path_to_image)
         self.tab = tab_detection.TabDetector()
         self.clipboard = QtWidgets.QApplication.clipboard()
         self.timer = QtCore.QTimer()
 
     def resize_image(self, img):
-        w = 371
-        h = 491 
+        w = self.ui.imageWidget.width()
+        h = self.ui.imageWidget.height()
         scale = min(w/img.width, h/img.height)
         new_image = img.resize((int(img.width*scale), int(img.height*scale)))
         return new_image
 
-
     def set_plain_text(self,text):
-        self.ui.plainTextEdit.clear()
-        self.ui.plainTextEdit.appendPlainText(text)
+        self.ui.plainTextEdit.setPlainText(text)
         pixmap = QPixmap( self.path_to_image)
         self.ui.imageWidget.setPixmap(pixmap)
         os.remove(self.path_to_image)
     
-
-    def show_message(self, widget): 
+    def show_message(self, widget,message = ''):
+        if message:
+            widget.setText(message)
         widget.setEnabled(True)
         self.timer.timeout.connect(lambda: widget.setEnabled(False))
         self.timer.start(2000)
 
     def get_path_to_file(self):
-        return QtWidgets.QFileDialog.getOpenFileName(self.MyWindow, 'выбрать путь к файлу', '', 'Изображение (*.png *.jpg)')[0]
+        return QtWidgets.QFileDialog.getOpenFileName(self.MyWindow, 'выбрать путь к файлу', '', 'Изображение (*.png *.jpg *.jpeg)')[0]
     
     def get_path_to_save(self):
         return QtWidgets.QFileDialog.getSaveFileName(self.MyWindow, 'выбрать папку для сохранения', 'результат.txt', 'Текстовый документ (*.txt)')[0]
     
     def copy_text(self):
         self.clipboard.setText(self.ui.plainTextEdit.toPlainText())
-        self.show_message(self.ui.copyMessage)
+        self.show_message(self.ui.messageLabel,"Copied")
     
     def save_text(self):
         path=self.get_path_to_save()
         if path:
             with open(path, "w", encoding = 'UTF-8') as file:
                 file.write(self.ui.plainTextEdit.toPlainText())
-            self.show_message(self.ui.saveMessage)
+            self.show_message(self.ui.messageLabel,"Saved")
             return self.result_text_path
+        
+    def do_text_recognition(self):
+        text,cords = self.recog.start()
+        res_img = self.resize_image(Image.open( self.path_to_image))
+        res_img.save( self.path_to_image)
+
+        if self.tab.mode:
+            tab_count = self.tab.tab_definition(cords)
+            tab_text = self.tab.add_tab(text, tab_count)
+            result = tab_text
+        else:
+            result = text
+
+        self.set_plain_text(result)
+        self.ui.messageLabel.setEnabled(False)
 
     def text_recognition(self,readFrom ='file'):
-
         if readFrom =='clipboard':
             image = ImageGrab.grabclipboard()
             if  image is None:
-                self.show_message(self.ui.errorMessage)
+                self.show_message(self.ui.errorMessage,'Is not picture')
                 return 'Wrong date'
         elif readFrom =='file':
             _path = self.get_path_to_file()
             if os.path.isfile(_path):
                 image = Image.open(_path)
             else:
+                self.show_message(self.ui.errorMessage,'Is not picture')
                 return 'Error'
         image.save(self.path_to_image)
-         
-        text,cords = self.recog.start()
-        res_img = self.resize_image(Image.open( self.path_to_image))
-        res_img.save( self.path_to_image)
-        if self.tab.mode:
-            tab_count = self.tab.tab_definition(cords)
-            tab_text = self.tab.add_tab(text, tab_count)
-            self.set_plain_text(tab_text)
-        else:
-            self.set_plain_text(text)
+
+        self.ui.messageLabel.setText('In progress')
+        self.ui.messageLabel.setEnabled(True)
+
+        self.workerThread = TextRecognitionWorker(self.ui,self.path_to_image,self.tab,self.recog)
+        self.workerThread.recognition_done.connect(self.recognition_completed)
+        self.workerThread.finished.connect(self.workerThread.deleteLater)
+        self.workerThread.start()
+
+    def recognition_completed(self, text):
+        self.set_plain_text(text)
+        self.ui.messageLabel.setEnabled(False)
 
     def switch_code_mode(self):
         mode = self.recog.switch_mode()
         if mode == 'text':
-            self.show_message(self.ui.textModeMessage)
+            message = 'TEXT MODE'
         elif mode == 'code':
-            self.show_message(self.ui.codeModeMessage)
+            message = 'CODE MODE'
+        self.show_message(self.ui.messageLabel,message)
     
     def switch_tab_mode(self):
         mode = self.tab.switch_mode()
-        # if mode == 'text':
-        #     self.show_message(self.ui.textModeMessage)
-        # elif mode == 'code':
-        #     self.show_message(self.ui.codeModeMessage)
-
-
-if __name__ == '__main__':
-    file_path = 'image/test.png'
-    h = ImgHandler(file_path)
-    h.text_recognition()
+        if mode == True:
+            message = 'TAB ON'
+        else:
+            message = 'TAB OFF'
+        self.show_message(self.ui.messageLabel,message)
