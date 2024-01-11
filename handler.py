@@ -1,4 +1,3 @@
-# pip install easyocr or pip install -r requirements.txt
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QThread
