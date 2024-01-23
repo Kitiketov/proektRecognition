@@ -6,7 +6,7 @@ from PIL import Image,ImageGrab
 from recognition import text_recognition
 import tab_detection
 
-import os
+import os,time
 
 class TextRecognitionWorker(QThread):
     recognition_done = QtCore.pyqtSignal(str)
@@ -27,17 +27,19 @@ class TextRecognitionWorker(QThread):
         return new_image
     
     def run(self):
+        start_time = time.time()
         text, cords = self.recog.start()
+        
         res_img = self.resize_image(Image.open(self.path_to_image))
         res_img.save(self.path_to_image)
 
         if self.tab.mode:
             tab_count = self.tab.tab_definition(cords)
-            tab_text = self.tab.add_tab(text, tab_count)
-            result = tab_text
-        else:
-            result = text
-
+            text = self.tab.add_tab(text, tab_count)
+            
+        result = text
+        end_time = time.time()
+        #print(f"Время работы - {end_time-start_time}")
         self.recognition_done.emit(result)
 
 
@@ -94,11 +96,11 @@ class ImgHandler():
             
         elif readFrom == 'file':
             _path = self.get_path_to_file()
-            if os.path.isfile(_path):
-                image = Image.open(_path)
-            else:
+            if not os.path.isfile(_path):
                 self.show_message(self.ui.errorMessage, 'No file selected')
                 return 'Error'
+            image = Image.open(_path)
+                
         image.save(self.path_to_image)
 
         self.ui.messageLabel.setText('In progress')
@@ -126,17 +128,13 @@ class ImgHandler():
         self.timer.blockSignals(False)
 
     def switch_code_mode(self):
+        mode_messsage = {'text':'TEXT MODE','code':'CODE MODE'}
         mode = self.recog.switch_mode()
-        if mode == 'text':
-            message = 'TEXT MODE'
-        elif mode == 'code':
-            message = 'CODE MODE'
+        message = mode_messsage[mode]
         self.show_message(self.ui.messageLabel, message)
     
     def switch_tab_mode(self):
+        mode_messsage = {True:'TAB ON',False:'TAB OFF'}
         mode = self.tab.switch_mode()
-        if mode == True:
-            message = 'TAB ON'
-        else:
-            message = 'TAB OFF'
+        message = mode_messsage[mode]
         self.show_message(self.ui.messageLabel, message)

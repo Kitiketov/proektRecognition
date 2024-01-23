@@ -18,7 +18,8 @@ class Postprocessing():
 
     def fuzzy_comparison(self,text):
         for lenght in self.word_len:
-
+            if lenght==3:   need_per = 50
+            else:   need_per = 65
             if len(text)<lenght:continue
 
             for i in range(len(text)-lenght):
@@ -28,8 +29,9 @@ class Postprocessing():
 
                     word,percent = process.extractOne(window,self.key_list[lenght])
                     word2,edit_percent = process.extractOne(edit_window,self.key_list[lenght])
+                    
 
-                    if edit_percent>percent>65 and word == word2:
+                    if edit_percent>percent>need_per and word == word2:
                         text = text[:i]+edit_window+text[i+lenght:]
 
         return text

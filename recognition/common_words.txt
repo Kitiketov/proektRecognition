@@ -50,3 +50,12 @@ delta
 False
 delete
 repl
+shuffle
+collection
+cls
+handle
+translate
+title
+click
+frameless
+silver

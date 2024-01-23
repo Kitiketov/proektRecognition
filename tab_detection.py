@@ -23,7 +23,7 @@ class TabDetector():
     def add_tab(self, text, tab_count):
         new_text = ''
         for line,tab in zip(text.split('\n'), tab_count):
-            new_text += '  ' * tab + line + '\n'
+            new_text += '    ' * tab + line + '\n'
         return new_text
 
     def tab_definition(self, cords):

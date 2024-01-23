@@ -2,3 +2,5 @@ test image/
 результат.txt
 output/
 **/__pycache__/
+testing/*
+!accuracy_assessment.py

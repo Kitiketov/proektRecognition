@@ -41,8 +41,6 @@ class Recognition:
         return text, cords
     
     def switch_mode(self):
-        if self.mode == 'text':
-            self.mode = 'code'
-        else:
-            self.mode = 'text'
+        mods = {'text':'code','code':'text'}
+        self.mode = mods[self.mode]
         return self.mode
