@@ -28,7 +28,7 @@ class TextRecognitionWorker(QThread):
     
     def run(self):
         start_time = time.time()
-        text, cords = self.recog.start()
+        text, cords = self.recog.start(self.tab.mode)
         
         res_img = self.resize_image(Image.open(self.path_to_image))
         res_img.save(self.path_to_image)

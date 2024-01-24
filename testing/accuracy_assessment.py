@@ -1,8 +1,8 @@
 import Levenshtein
 
 
-TEST_COUNT = 5
-FOLDERS = ["My solution","Base model(without algo)","Base model(with algo)","Yandex","Convertio"]
+TEST_COUNT = 7
+FOLDERS = ["My solution","Base model(without algo)","Yandex","Convertio"]
 
 print(f"testN |{'   '.join(FOLDERS)}")
 
@@ -24,24 +24,3 @@ for i in range(1,TEST_COUNT+1):
 
     print(f"  {i}   |{'   '.join(result)}")
 
-"""
-90.68%
-82.67%
-100.00%
-87.79%
-99.36%
-"""
-"""
-87.30%
-77.89%
-93.67%
-80.30%
-78.39%
-"""
-"""
-84.09%
-82.23%
-90.99%
-78.55%
-75.97%
-"""

@@ -11,7 +11,7 @@ class Recognition:
         self.image_name = image_name
         self.pp = postprocessing.Postprocessing()
 
-    def start(self):
+    def start(self,tab_mode):
         # self.image =  Image.open(self.image_name)
         # im_pre = image_preprocessing.ImagePreprocessor(self.image)
         # bin_image = im_pre.convert_color()
@@ -22,7 +22,7 @@ class Recognition:
 
         if self.mode == 'text':
             reader = easyocr.Reader(['ru', 'en'])
-            result = reader.readtext(self.image_name, detail=1, paragraph=False, height_ths=1, width_ths=5, x_ths=2 )
+            result = reader.readtext(self.image_name, detail=1, paragraph=not tab_mode, height_ths=1, width_ths=5, x_ths=2 )
         else:
             reader = easyocr.Reader(['en'],
                         model_storage_directory='custom_EasyOCR/model',
