@@ -3,7 +3,7 @@ from PIL import Image, ImageOps
 
 class ImagePreprocessor:
     def __init__(self, image) -> None:
-        self.image =  image
+        self.image = image
     
     def _find_average_color(self, image):
         color = 0

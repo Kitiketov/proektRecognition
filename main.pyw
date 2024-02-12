@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QPoint
 
 import handler
@@ -39,6 +39,7 @@ class MyWindow(QtWidgets.QMainWindow):
         self.oldPos = event.globalPos()
 
 app = QtWidgets.QApplication([])
+app.setWindowIcon(QtGui.QIcon('Untitled.ico'))
 application = MyWindow()
 application.show()
 sys.exit(app.exec())

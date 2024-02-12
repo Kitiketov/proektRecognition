@@ -1,4 +1,3 @@
-import Levenshtein
 from fuzzywuzzy import process
 
 
@@ -6,7 +5,7 @@ class Postprocessing():
     def __init__(self) -> None:
         self.key_list = {}
         self.word_len = set()
-        with open("recognition/common_words.txt") as f:
+        with open('recognition/common_words.txt') as f:
             s = f.readlines()
         for word in s:
             word = word[:-1]
@@ -18,21 +17,21 @@ class Postprocessing():
 
     def fuzzy_comparison(self,text):
         for lenght in self.word_len:
-            if lenght==3:   need_per = 50
+            if lenght == 3:   need_per = 50
             else:   need_per = 65
-            if len(text)<lenght:continue
+            if len(text) < lenght:  continue
 
-            for i in range(len(text)-lenght):
-                window = text[i:i+lenght]
-                if "1" in window:
-                    edit_window = window.replace("1","l")
+            for i in range(len(text) - lenght):
+                window = text[i:i + lenght]
+                if '1' in window:
+                    edit_window = window.replace('1','l')
 
                     word,percent = process.extractOne(window,self.key_list[lenght])
                     word2,edit_percent = process.extractOne(edit_window,self.key_list[lenght])
                     
 
-                    if edit_percent>percent>need_per and word == word2:
-                        text = text[:i]+edit_window+text[i+lenght:]
+                    if edit_percent > percent > need_per and word == word2:
+                        text = text[:i] + edit_window + text[i + lenght:]
 
         return text
 
